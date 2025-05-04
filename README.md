@@ -1,2 +1,2 @@
 # Barber_Shop
-ficticious barber shop website
+ficticious barber shop website.
