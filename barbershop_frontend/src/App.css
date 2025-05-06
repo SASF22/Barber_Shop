@@ -1,0 +1,213 @@
+#navigationalLinks{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+  gap: 2rem;
+  height: 5vh;
+}
+
+/* HOME PAGE FORMATTING */
+#homeContainer {
+  display: grid;  
+  grid-template-rows: .5fr 1.5fr 1.5fr;
+  grid-template-columns: 1fr 1fr 4fr 1fr 1fr 1fr;
+  height: 90vh;
+  width: 95vw;
+} 
+
+#homeH1 {
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-column-end: 7;  
+  font-size: 2.5rem;
+  text-align: left;
+}
+#homeHoursTable {
+  grid-row-start: 2;
+  grid-column-start: 3;
+  font-size: 1.5rem;  
+}
+#homeHoursTable th{
+  width: 50%;
+}
+#homeHoursTable table{
+  width: 100%;
+}
+#homeViewImg {
+  grid-row-start:2;
+  grid-row-end: 3;
+  grid-column-start: 4;
+  height: 100%;
+  width: 100%;  
+}
+#homeViewImg>img{
+  height: 300px;
+  aspect-ratio: auto;
+}
+
+#pole{
+  grid-row-start: 2;
+  grid-row-end: 4;
+  grid-column-start: 5;  
+  border-radius: 1rem;
+  z-index: -1;
+  display:flex;
+  justify-content: flex-start;
+}
+#pole>img {
+  justify-self: flex-start;
+  height: 600px;
+}
+#homeComment {
+  grid-row-start: 3;
+  grid-column-start: 2;  
+  grid-column-end: 5;
+  font-size: 2rem;
+  margin: 0px;  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+#homeComment p{
+  margin: 0px;
+}
+
+/* ABOUT PAGE FORMATTING */
+
+h1{
+  font-family: "Cinzel", serif;
+  font-size: 4rem;
+}
+h2{
+  font-size: 3rem;
+}
+body{
+  
+  font-family: "Young Serif", serif;
+}
+/* #leftBase{
+  margin-left: 10vw;
+} */
+#aboutContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10vw;
+  
+  
+}
+#aboutContainer embed{
+  flex: 10%;
+  height: 100%;
+  /* width: 60%;     */
+  border-radius: 2rem;
+}
+#aboutContainer div{
+  width: 80vw;
+  height: 30vh;
+  margin-bottom: 4rem;    
+}
+.aboutBarber{    
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.5rem;    
+  align-items: center;
+  overflow: visible;   
+  width: 20vw;
+  background-color: grey;
+  /* border-radius: 2rem; */
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 15rem;
+  border-top-right-radius: 15rem;
+}
+.aboutBio{
+  margin-left: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  
+}
+.aboutBarber p{
+  margin: 0;
+}
+/*  Appointment Portion */
+
+h1{
+  font-family: "Cinzel", serif;
+  font-size: 4rem;
+}
+body{
+  /* background-color: grey; */
+  font-family: "Young Serif", serif;
+}
+#navigation{
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  /* margin-left: 10vw; */
+  font-size: 1rem;
+  margin-bottom: .5rem;
+  background-color: rgb(73, 73, 73);
+  padding: 1.1rem;    
+  color: white;
+}
+#calendar{
+  display: flex;
+  margin-top: 5vh;
+  flex-wrap: wrap;
+  
+}
+#navigation a{
+  color: white;
+}
+#leftBase{
+  margin-left: 10vw;
+}
+#container{
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  margin-left: 10vw;
+}
+#focus{
+  /* border: black solid 2px; */
+  /* width: 100vw; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20vw;
+  gap: 16rem;
+}
+embed{
+  height: 100%;
+}
+th{
+  text-align: left;
+  font-size: 1.7rem;
+  width: 3rem;    
+}
+td{
+  width: 12rem;
+}
+#comment{
+  text-align: left;
+  font-size: 1.5rem;
+  margin-top: 4rem;
+}
+#comment p{
+  margin-bottom: 0;
+  margin-top: 0;
+}
+#pole{
+  width: 20vw;
+  background-color: grey;
+}
+#display{
+  display: flex;
+  gap: 4rem;
+}
+
+
