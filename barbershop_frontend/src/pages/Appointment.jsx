@@ -7,7 +7,8 @@ import CalendarView from "../components/CalendarView";
 const Appointment = ({authToken, setAuthToken}) => {
     const [emailValue, setEmailValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");   
-    const [selectedMonth, setSelectedMonth] = useState(0);    
+    const [selectedMonth, setSelectedMonth] = useState(0);
+    const [dayView, setDayView] = useState("");    
     const dow = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const moy = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     //const urlFix = "";
@@ -294,10 +295,18 @@ const Appointment = ({authToken, setAuthToken}) => {
                                     moy={moy}
                                     dow={dow}
                                     logOut={logOut}
+                                    dayView={dayView}
+                                    setDayView={setDayView}
+                                    urlFix={urlFix}
 
                                     />}
                                 </div>                             
-                                    {authToken && <AppointmentViewer />}
+                                    {authToken && <AppointmentViewer
+                                    dayView={dayView}
+                                    setDayView={setDayView}
+                                    urlFix={urlFix}
+
+                                    />}
                              </div>
                              
                              </>

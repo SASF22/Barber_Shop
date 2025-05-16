@@ -2,7 +2,7 @@ import React from  "react";
 
 
 
-const CalendarView = ({moy, dow, selectedMonth, setSelectedMonth, logOut}) => {
+const CalendarView = ({moy, dow, selectedMonth, setSelectedMonth, logOut, dayView, setDayView}) => {
 
  const appointmentCalendarStyle = {
             display: "flex",
@@ -49,7 +49,7 @@ const generateMonth = ()=>{
                     let newArray = [];
                     let startingDay = currentPeriod.getDay();
                     let year = currentPeriod.getFullYear();
-                    let month = moy[currentPeriod.getMonth() + 1];
+                    let month = moy[currentPeriod.getMonth()];
                     for (let j = 0; j < startingDay; j++){
                         newArray.push({
                             date: "",
@@ -90,6 +90,9 @@ const generateMonth = ()=>{
             const handleDayClick = (e)=>{
                 let dataDate = e.target.attributes[1].value;
                 console.log(dataDate) 
+                setDayView(()=>{
+                    return dataDate;
+                })
             }
 
 

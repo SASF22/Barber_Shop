@@ -25,9 +25,8 @@ client.connect();
 
 app.use(express.json())
 console.log(__dirname)
-const distFolder = path.resolve(__dirname, "../", "barbershop_frontend", "dist")
+const distFolder = path.resolve(__dirname, "../", "barbershop_frontend", "dist");
 //app.use(express.static(path.join(__dirname, 'dist')))
-
 
 app.use(express.static(distFolder));
 console.log("NEW LOCATION: ", distFolder)
@@ -139,25 +138,29 @@ app.get("/api/token/verify", async (req, res)=>{
       }catch(e){
         console.log(e.message);                 
       }     
-  });
+});
 
-app.get('/api', (req, res)=>{
-   
+app.get('/api/dayInfo/:day', async (req, res)=>{
+    const {day} = req.params;
+    const day_info = day.split("*");
+    const date = `${day_info[1]} ${day_info[2]} ${day_info[3]}`;
+    const result = await client.query("SELECT * FROM appointment WHERE appt_date = $1",
+          [date]);
+    const data = result.rows;
+    console.log(date)
+    console.log(data)    
+    res.json(data);
+    console.log("got here")
+});
+
+app.get('/api', (req, res)=>{   
     res.json({fruits: ["apple", "orange", "banana"]})
     console.log("got here")
-})
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-
-
-
-
-
-
-
-
+    console.log(`Example app listening on port ${port}`)
+});
 
 
 
