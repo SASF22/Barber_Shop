@@ -58,7 +58,7 @@ res.sendFile(path.join(distFolder, "index.html"));
 
 
 
-app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/login", async (req, res)=>{
+app.post("/api/login", async (req, res)=>{
   const {email, password} = req.body;  
   const attempt = await client.query("SELECT * FROM users WHERE email = $1",
     [email.toLowerCase()]
@@ -91,7 +91,7 @@ app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/login", a
     res.json("Email not registered in system")
   }
 });
-app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/register", async (req, res)=>{
+app.post("/api/register", async (req, res)=>{
   const {email, password} = await req.body; 
   const attempt = await client.query("SELECT * FROM users WHERE email = $1",
     [email.toLowerCase()]
@@ -121,7 +121,7 @@ app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/register"
   }
 });
 
-app.get("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/token/verify", async (req, res)=>{
+app.get("/api/token/verify", async (req, res)=>{
   const {authorization} = req.headers
  
   const token = authorization.slice(7)
