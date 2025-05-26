@@ -102,18 +102,15 @@ app.post("/api/register", async (req, res)=>{
       res.json('This email address has already been registered.');      
     }
     else{
-      bcrypt.hash(password, saltRounds, async(error, hash)=>{
-        if(error){          
-          res.json("Hashing Error");
-        }
-        else{
-          const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
-          [email.toLowerCase(), hash]);  
-          const token = jwt.sign({username : email}, jwt_SECRET)
+      const hash = await bcrypt.hash(password, saltRounds)
+        
+      const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
+      [email.toLowerCase(), hash]);  
+      const token = jwt.sign({username : email}, jwt_SECRET)
                   
-          res.status(200).json({message: "success", token: token});           
-        }
-      })      
+      res.status(200).json({message: "success", token: token});           
+        
+            
     }     
   }catch(e){
     
