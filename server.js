@@ -39,9 +39,7 @@ const distFolder = path.resolve(__dirname,"public","dist");
 app.use(express.static(distFolder));
 console.log("NEW LOCATION: ", distFolder)
 
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/', async (req, res) =>{
-res.sendFile(path.join(distFolder, "index.html"));
-})
+
 app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/home', async (req, res) =>{
   res.sendFile(path.join(distFolder, "index.html"));
 })
@@ -54,7 +52,9 @@ app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/appointments',
 app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/socialMedia', async (req, res) =>{
   res.sendFile(path.join(distFolder, "index.html"));
 })
-
+app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/', async (req, res) =>{
+res.sendFile(path.join(distFolder, "index.html"));
+})
 
 
 
