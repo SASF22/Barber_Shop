@@ -104,7 +104,7 @@ app.post("/api/register", async (req, res)=>{
     else{
       bcrypt.hash(password, saltRounds, async(error, hash)=>{
         if(error){          
-          res.json(error);
+          res.json("Hashing Error");
         }
         else{
           const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
