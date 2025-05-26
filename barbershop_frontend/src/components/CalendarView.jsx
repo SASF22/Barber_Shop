@@ -2,18 +2,7 @@ import React from  "react";
 
 
 
-const CalendarView = ({moy, dow, selectedMonth, setSelectedMonth, logOut, dayView, setDayView}) => {
-
- const appointmentCalendarStyle = {
-            display: "flex",
-            flexWrap: "wrap",
-            border: "solid black 2px",
-            height: "70vh",
-            width: "60vw",
-            borderRadius: ".5rem",
-            margin: "2rem"
-
-        }
+const CalendarView = ({moy, dow, selectedMonth, setSelectedMonth, logOut, setDayView, backendGrabData, emailValue, setMyAppointmentView, myAppointmentView, grabMyAppointments }) => {
 
 const daysInMonth = (period) => {
                                 for ( let i = 31; i > 27; i--){                       
@@ -21,26 +10,17 @@ const daysInMonth = (period) => {
                                     if(targetYearMonth.getMonth() === period.getMonth()){                            
                                         return i;
                                     }
-                                }    
-                                console.log(`error`);
+                                }                                
                                 return -1;
                             }
 
 const generateMonth = ()=>{                
                
-                const today = new Date();
-                const currMonth = today.getMonth();
-                const thisMonth = currMonth;
-                const nextMonth = currMonth + 1;
-                const lastMonth = currMonth + 2;
-                const todayDay = today.getDay();
-                const todayDate = today.getDate();
-                const thisYear = today.getFullYear();
+                const today = new Date();             
                 
                 let firstPeriod = new Date(today.getFullYear(), today.getMonth(), 1);
                 let secondPeriod = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-                let thirdPeriod = new Date(today.getFullYear(), today.getMonth() + 2, 1);
-                                
+                let thirdPeriod = new Date(today.getFullYear(), today.getMonth() + 2, 1);                                
 
                 let periods = [firstPeriod, secondPeriod, thirdPeriod];
                 let currentPeriod = periods[selectedMonth];
@@ -58,8 +38,7 @@ const generateMonth = ()=>{
                             month: "",
                         })
                     };
-                    for(let i = 0; i < daysInMonth(currentPeriod); i++){                        
-                        console.log(startingDay)                    
+                    for(let i = 0; i < daysInMonth(currentPeriod); i++){                                            
                         newArray.push({
                             date: i + 1,
                             day: dow[(i + startingDay) % 7],
@@ -69,65 +48,68 @@ const generateMonth = ()=>{
                     }; 
                     return newArray;                  
                 }
-                let daysArray = createDaysArray();                
-
+                let daysArray = createDaysArray(); 
                 let monthObject = {
                     month: moy[currentPeriod.getMonth()],
                     days: daysArray,
-                }
-                console.log(monthObject)
+                }                
                 return(
                     <>                       
                     {monthObject.days.map((item, num)=>{
                         return (
-                        <div className="daySquare" datadate={item.day + "*" +  item.month + "*" + item.date + "*" + item.year} key={num} onClick={(e)=>{return handleDayClick(e)}}    style={{display: 'flex', justifyContent:'center', border: '2px solid black', borderRadius:'.5rem', width:"calc(14.28% - 4px)"}}>{item.day} {item.date}</div>
+                        <div className="daySquare" datadate={item.day + "*" +  item.month + "*" + item.date + "*" + item.year} key={num} onClick={(e)=>{return handleDayClick(e)}} >{item.day} {item.date}</div>
                     )
                     })}       
                     </>
                 )
             }
-
             const handleDayClick = (e)=>{
-                let dataDate = e.target.attributes[1].value;
-                console.log(dataDate) 
+                let dataDate = e.target.attributes[1].value;               
                 setDayView(()=>{
                     return dataDate;
-                })
+                });
+                backendGrabData()                
             }
-
 
              const loggedInView = ()=>{
             return(
                 <>
                 <div id="appointmentContainer">
-                <div><button id="appointmentMonth1" onClick={()=>{
-                    setSelectedMonth(()=>{return 0});
-                }}>{moy[(new Date().getMonth())%12]}</button>
-                <button id="appointmentMonth2" onClick={()=>{
-                    setSelectedMonth(()=>{return 1});
-                }}>{moy[(new Date().getMonth() + 1)%12]}</button>
-                <button id="appointmentMonth3" onClick={()=>{
-                    setSelectedMonth(()=>{return 2});
-                }}>{moy[(new Date().getMonth() + 2)%12]}</button>
-                <button  id="logoOutButton" onClick={()=>{
-                    logOut();
-                }}>LOG OUT</button>
-                </div>
-                <div id="appointmentDisplay">
-                    <div style={{display:'flex', justifyContent:'center', width:"60vw"}} > <h1 style={{margin: "0px"}}>{moy[(new Date().getMonth() + selectedMonth)%12]}</h1>  </div>
-                    <div id="appointmentCalendar" style={appointmentCalendarStyle}>{generateMonth()}</div>
+                <div className="loggedInViewInnerStyle" > 
+                    <div>
+                        <button className="appointmentMonth" onClick={()=>{
+                        setSelectedMonth(()=>{return 0});
+                        }}>{moy[(new Date().getMonth())%12]}</button>
+                        <button className="appointmentMonth" onClick={()=>{
+                            setSelectedMonth(()=>{return 1});
+                        }}>{moy[(new Date().getMonth() + 1)%12]}</button>
+                        <button className="appointmentMonth" onClick={()=>{
+                            setSelectedMonth(()=>{return 2});
+                        }}>{moy[(new Date().getMonth() + 2)%12]}</button>
+                    </div>                    
+                   
+                    <div className="logOutButtonContainer"> <div className="logOutButtonLoggInAs" >LOGGED IN AS:</div> <div className="logOutEmailDisplay" ><strong><em>{emailValue}</em></strong></div> <button className="logOutButton" onClick={()=>{
+                        logOut();
+                    }}>LOG OUT</button></div>
+                </div>                
+                
+                <div className="appointmentDisplay">
+                    <div className="appointmentDisplayInner" > <h1 className="appointmentDisplayInnerH1" >{moy[(new Date().getMonth() + selectedMonth)%12]}</h1>  </div>
+                    <div className="appointmentCalendar" >{generateMonth()}</div>
                     
                 </div>
                 <div>
-                    <button id="appointmentXpButton">xpButton</button>
-                    <button id="appointmentXpButton2">xpButton2</button>
+                    <button  className="myAppointmentsButton"  onClick={()=>{ 
+                        grabMyAppointments();
+                        setMyAppointmentView(()=>{
+                        return !myAppointmentView;
+                    })}}>MY APPOINTMENTS</button>
+                    
                 </div>
                 </div>
                 </>                       
                 )
          }
-
-
           return(
                              <>
                                 {loggedInView()}
@@ -135,7 +117,5 @@ const generateMonth = ()=>{
           );
 
 }
-
-
 
 export default CalendarView;

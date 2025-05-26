@@ -8,6 +8,8 @@ const Home = () => {
 
           return(
                              <>
+                <div className="homeOuterContainer">
+            
                 
                 <div id="homeContainer">   
                 <div id="homeH1" ><h1> Welcome to Marc L's Cuts, Trims, and Wins</h1></div>                  
@@ -39,11 +41,11 @@ const Home = () => {
                 </tr>
                 <tr>   
                     <td>Friday</td>
-                    <td>09:00 am - 05:00 pm</td>             
+                    <td>09:00 am - 07:00 pm</td>             
                 </tr>
                 <tr>   
                     <td>Saturday</td>
-                    <td>09:00 am - 05:00 pm</td>             
+                    <td>09:00 am - 07:00 pm</td>             
                 </tr>
                 <tr>
                     <td>Sunday</td>
@@ -54,7 +56,7 @@ const Home = () => {
                                
             </table>
         </div>
-        <div id="homeViewImg"><img src="/src/pages/media/marcL.png" type=""/></div>
+        
          
       
 
@@ -71,9 +73,10 @@ const Home = () => {
     </div>
     
     <div id="pole">
-        <img src="/src/pages/media/poleA.png" type=""/>        
+        <img src="/src/pages/media/marcl.png" alt="Cartoon picture of Mr. Marc L" type=""/>        
     </div>
         
+    </div>
     </div>
 
                              </>

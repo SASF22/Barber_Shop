@@ -1,206 +1,192 @@
-import React, { useEffect, useState} from  "react";
+import { useEffect} from  "react";
 
 
 
-const AppointmentViewer = ({dayView, setDayView, urlFix}) => {
-    const [apptArray, setApptArray] = useState([])
-    let appointmentsArray = [];
+const AppointmentViewer = ({dayView, thisFunction, formatTime, moy, emailValue, logOut, backendGrabData, apptArray, setPopupTrigger, setPopupTrigger2,  setSchedulingArray,  myAppointmentView, setMyAppointmentView, myAppointments, setPopupObject}) => {
+       
+    const cnclMyAppt = (e)=>{
+        
+        let appointmentId = e.target.attributes[0].value;
+        let appointmentInfo = e.target.attributes[1].value;
+        let apInfo = appointmentInfo.split("*");        
 
-    const grabData = async ()=>{
-                if(dayView != ""){
-                const response = await fetch(`${urlFix}/api/dayInfo/${dayView}`)
-                console.log("data changed");
-                const data = await response.json();
-                console.log(data)               
-                setApptArray(()=>{
-                    return [...data];
-                })              
-                }
-                
-            }; 
+        setPopupObject(()=>{
+        const newObject = new Object();
+        newObject.appt_id = appointmentId;
+        newObject.functionCall = thisFunction()
+        newObject.deleteAppt = true;
+        newObject.text = "YOU ARE DELETING THE APPOINTMENT";
+        newObject.text2 = `Dated: ${apInfo[1]} at ${apInfo[0]} with ${apInfo[2]}`;
+
+        return {...newObject};
+
+        })
+    }
+
     useEffect(()=>{        
-        grabData()
+        backendGrabData()
+        setMyAppointmentView(()=>{
+            return false;
+        })
     }, [dayView]);
 
-
-
-
-      const viewer = ()=>{
+        const viewer = ()=>{
+        
         const dayInfo = dayView.split("*");        
-        console.log(dayInfo);
+        let schedule = true;        
+        let newDate =  new Date(`${dayInfo[1]} ${dayInfo[2]}, ${dayInfo[3]}`);
+        if(newDate < Date.now()){
+            console.log("FALSE")
+            schedule = false;
+        }         
             return (
                 <>
-                    <div id="viewerStyle" style={viewerStyle}>
-                        <h2>{dayInfo[0]} {dayInfo[1]} {dayInfo[2]} {dayInfo[3]}</h2> 
-                        {(dayView == "***") && blankSchedule()}
-                        {((dayInfo == "") && (dayInfo != "***") ) && selectScheduleMessage()}
-                        {((dayInfo[0] == "Sunday") || (dayInfo[0] == "Monday") && (dayInfo != "") && (dayView != "***")) && notWorkingSchedule()}
-                        {((dayInfo[0] != "Sunday") && (dayInfo[0] != "Monday") && (dayInfo != "") && (dayView != "***")) && schedule()}          
+                    <div className="viewerStyle" >
+                        <h2 style={{textAlign:'center'}}>{(!myAppointmentView) && dayInfo[0]} {(!myAppointmentView) &&  dayInfo[1]} {(!myAppointmentView) &&  dayInfo[2]}{((dayView != "") &&(dayView != "***") && (!myAppointmentView) ) && ","} { (!myAppointmentView) && dayInfo[3]}  {(myAppointmentView) && 'APPOINTMENTS' }</h2> 
+                        {((dayView == "***") && (!myAppointmentView)) && blankSchedule()}
+                        {((dayInfo == "") && (dayInfo != "***") && (!myAppointmentView) ) && selectScheduleMessage()}
+                        {((dayInfo[0] == "Sunday") || (dayInfo[0] == "Monday") && (dayInfo != "") && (dayView != "***") && (!myAppointmentView)) && notWorkingSchedule()}
+                        {((dayInfo[0] != "Sunday") && (dayInfo[0] != "Monday") && (dayInfo != "") && (dayView != "***") && (!myAppointmentView) && (schedule) ) && schedule2()} 
+                        {((!schedule )&&(!myAppointmentView)) && passedDaySchedule()}
+                        {((myAppointmentView)) && myAppointmentDisplay()}         
                     </div>
                 </>
             )
         }
         const blankSchedule = ()=>{
             return(<>            
-            <div style={{display: "flex", justifyContent:"center", textAlign:"center"}}>                
+            <div className='blankScheduleStyle'>                
+            </div>           
+            </>)
+        }
+        const passedDaySchedule = () =>{
+            return(<>            
+            <div className="notWorkingScheduleStyle">
+                <h1>Sorry.  Unavailable to schedule.  This day has passed.</h1>
             </div>           
             </>)
         }
         const notWorkingSchedule = ()=>{
             return(<>            
-            <div style={{display: "flex", justifyContent:"center", textAlign:"center"}}>
+            <div className="notWorkingScheduleStyle">
                 <h1>Sorry.  The shop is closed this day.  Please try another day to schedule an appointment.</h1>
             </div>           
             </>)
         }
         const selectScheduleMessage = ()=>{
             return(<>            
-            <div style={{display: "flex", justifyContent:"center", textAlign:"center", padding:"1rem"}}>
+            <div className="selectScheduleMessageStyle" >
                 <h1>Please select a day to schedule your appointment</h1>
             </div>           
             </>)
         }
+        const displayAppointments = ()=>{
+                    let barberArray = ['Marc Lamont', 'Chad Hubrik', 'Javier Espinosa', 'Dwayne Jackson']
 
-        const scheduleStyle = {
+            return   <>
+
+                    {myAppointments.map((item)=>{                    
+                    
+                    let dateFormat = item.appt_date.slice(0, 10)
+                    let dateArray = dateFormat.split('-')           
+                    
+                    return  <>
+                                <div className="myAppointmentDisplayStyle" key={item.appt_id} > <div>TIME: {(formatTime(item.appt_time)).toUpperCase()}</div> <div>DATE: {(moy[Number (dateArray[1]) -1]).toUpperCase()} {dateArray[2]}, {dateArray[0]}</div> <div>BARBER: {(barberArray[item.barber - 1]).toUpperCase()}</div> 
+                                
+                                <button apptnum={item.appt_id} apptinfo={(formatTime(item.appt_time)).toUpperCase() + "*" + (moy[Number (dateArray[1]) -1]).toUpperCase() + " " + dateArray[2] + ", " + dateArray[0] + "*" + (barberArray[item.barber - 1]).toUpperCase() } onClick={(e)=>{
+                                    cnclMyAppt(e);}}> CANCEL
+                                </button> 
+                                
+                                </div> 
+                            </>  
+            })};
             
-            fontSize: "1.5rem",
-            border: "solid black 1px",
-            padding: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: '1rem',
+            </>
         }
-        const apptStyle = {
-            display: 'flex',
-            flexDirection: 'column',
-            border: '2px black solid',
-            borderRadius: '2rem',
-            width: '80%',
-            padding: '2rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            gap: '1rem'
-        }
+        const displayAppointmentsNone = ()=>{
+            return<>
+            <h2>YOU HAVE NO APPOINTMENTS SCHEDULED</h2>
+            </>
+        }        
 
-        const setAppointment =  ()=>{
-            console.log("WAKA WAKA")
-        }
-
-        const schedule = ()=>{
-          console.log("THIS IS THE ARRAY: ",apptArray)
-          console.log("THIS IS THE COUNT: ", apptArray.length)
-            let countMax = apptArray.length;
-            let count = 0;
-            let arrayPos = 0;
-            const newArray =[];
-            const timeArray = ['09:00 a.m.', '10:00 a.m.', '11:00 a.m.', '12:00 p.m.', '01:00 p.m.', '02:00 p.m.', '03:00 p.m.', '04:00 p.m.', '05:00 p.m.', '06:00 p.m.']
-
-            if (countMax < 1){
-                return (<>
-                    {regularSchedule()}                
-                </>)
-            }
-            else{
+        const myAppointmentDisplay = ()=>{          
+           
+           return <>            
             
-            newArray.push(new Object)
-            newArray[arrayPos]['time'] = timeArray[arrayPos]
-            if(apptArray[count].appt_time == `09:00:00`){
-                for(let s = 1; s < 5; s++){
-                    if((count < countMax) && (apptArray[count].barber == s)){
-                        //newArray.push(`09:00:00 scheduled, barber ${s}`);
-                        count += 1;
-                        newArray[arrayPos][`barber${s}`] = `Unavailable`;
-                    }
-                    else{
-                        //newArray.push(`09:00:00 not scheduled, barber ${s}`);
-                        newArray[arrayPos][`barber${s}`] = `Schedule`;
-                    }
-                }
+            <div className="myAppointmentListContainer">
+                
+                {((myAppointments.length > 0) && myAppointments[0].appt_date != null) &&  displayAppointments()}
+                {((myAppointments.length == 0) || (myAppointments[0].appt_date == null)) && displayAppointmentsNone()}                
+                               
+            </div>            
+            </>
+        }       
+
+        const attemptSetAppointment = async (e, barberNum)=>{             
+
+            if (emailValue != window.localStorage.getItem('EMAIL')){
+                setPopupTrigger2(()=>{
+                    return true;
+                })
+                logOut();
+                return;
+            }                       
+                        
+            barberNum = barberNum;
+            let apptTime = e.target.parentNode.parentNode.firstChild.textContent.slice(0,5); 
+            if(Number (apptTime.slice(0,2)) < 9 ){
+                apptTime =  String ((Number (apptTime.slice(0,2)) + 12) + ":00:00");                
             }
-            else{
-                for(let i = 1; i < 5; i++){
-                    //newArray.push(`9:00:00 not scheduled, barber ${i}`);
-                    newArray[arrayPos][`barber${i}`] = `Schedule`;
-                }
-            }
-            arrayPos += 1;
-            for(let x = 10; x < 19; x++){ 
-                newArray.push(new Object);
-                newArray[arrayPos]['time'] = timeArray[arrayPos]           
-                if((count < countMax) && (apptArray[count].appt_time == `${x}:00:00`)){                   
-                   for(let j = 1; j < 5; j ++){
-                        if ((count < countMax) && (apptArray[count].barber == `${j}`)){
-                            count += 1;
-                            newArray[arrayPos][`barber${j}`] = `Unavailable`;
-                            //newArray.push(`${x}:00:00 scheduled, barber ${j}`);
-                        }
-                        else{
-                            //newArray.push(`${x}:00:00 not scheduled, barber ${j}`);
-                            newArray[arrayPos][`barber${j}`] = `Schedule`;
-                        }                        
-                    } 
-                    arrayPos += 1;
-                }
-                else{                    
-                    for(let i = 1; i < 5; i++){
-                        //newArray.push(`${x}:00:00 not scheduled, barber ${i}`);
-                        newArray[arrayPos][`barber${i}`] = `Schedule`;
-                    }
-                    arrayPos += 1;
-                }
-            }
-            console.log("This is the new Array: ", newArray)
-            }
-            return(<>
-               { newArray.map((appt, number)=>{
-                          
-                    return(
+            let date = await dayView.split('*');
+            let apptDate = await date[1] + " " + date[2] + " " + date[3]
+            
+            setSchedulingArray(()=>{
+                let newArray = [];
+                newArray.push(emailValue)
+                newArray.push(apptTime)
+                newArray.push(barberNum)
+                newArray.push(apptDate)
+                return [...newArray];
+            }) 
+            setPopupTrigger(()=>{
+                return true;
+            }) 
+        }
+        const schedule2 = ()=>{
+            return (<>
+            {apptArray.map((appt, number)=>{
+            return(
                     <>
-                                <div key={number} style={apptStyle}> 
-                                    <div style={{fontSize:'2rem', fontWeight:'bolder', marginBottom:'2rem'}}>{appt.time}</div> 
-                                    <div style={{display:'flex'}}><div style={{minWidth:'50%', fontSize:'1.25rem', fontWeight:'bolder'}}>Marc Lamont:</div>
-                                    {(appt['barber1'] =='Schedule')&&<button onClick={(e)=>{appointmentSelection(e)}} style={{minWidth:'50%'}}>{appt[`barber1`]}</button>}
-                                    {(appt['barber1'] =='Unavailable')&&<div style={{minWidth:'50%', display:'flex', justifyContent:'center',  alignItems:'end'}}>{appt[`barber1`]}</div>}
-                                    </div> 
-                                    <div style={{display: 'flex'}}><div style={{minWidth:'50%',fontSize:'1.25rem', fontWeight:'bolder'}}>Chad Hubrik:</div><button style={{minWidth:'50%'}}>{appt[`barber2`]}</button></div> 
-                                    <div style={{display: 'flex'}}><div style={{minWidth:'50%',fontSize:'1.25rem', fontWeight:'bolder'}}>Javier Espinosa:</div><button style={{minWidth:'50%'}}>{appt[`barber3`]}</button></div> 
-                                    <div style={{display: 'flex'}}><div style={{minWidth:'50%',fontSize:'1.25rem', fontWeight:'bolder'}}>Dwayne Jackson:</div><button style={{minWidth:'50%'}}>{appt[`barber4`]}</button></div>  
+                                <div className="apptStyle" key={number} > 
+                                    <div style={{fontSize:'2rem', fontWeight:'bolder', marginBottom:'2rem', display:'flex'}}><div style={{minWidth:'50%'}}>{appt.time}</div><div style={{minWidth: '50%', fontSize:'1.25rem'}}></div></div> 
+                                    <div style={{display:'flex'}}><div  className="apptBarberName">Marc Lamont:</div>
+                                    {(appt['barber1'] =='Schedule')&&<button onClick={(e)=>{attemptSetAppointment(e, 1)}} style={{minWidth:'50%' , fontSize:'1.25rem', fontWeight:'bolder', borderRadius:'.5rem'}}>{appt[`barber1`]}</button>}
+                                    {(appt['barber1'] =='Unavailable')&&<div style={{minWidth:'50%', display:'flex', justifyContent:'center',  alignItems:'end', fontSize:'1.35rem', fontWeight:'bolder'}}>{appt[`barber1`]}</div>}
+                                    </div>
+
+                                    <div style={{display:'flex'}}><div className="apptBarberName">Chad Hubrik:</div>
+                                    {(appt['barber2'] =='Schedule')&&<button onClick={(e)=>{attemptSetAppointment(e, 2)}} style={{minWidth:'50%' , fontSize:'1.25rem', fontWeight:'bolder', borderRadius:'.5rem' }} >{appt[`barber2`]}</button>}
+                                    {(appt['barber2'] =='Unavailable')&&<div style={{minWidth:'50%', display:'flex', justifyContent:'center',  alignItems:'end', fontSize:'1.35rem', fontWeight:'bolder'}}>{appt[`barber2`]}</div>}
+                                    </div>
+
+                                    <div style={{display: 'flex'}}><div  className="apptBarberName">Javier Espinosa:</div>
+                                    {(appt['barber3'] =='Schedule')&&<button onClick={(e)=>{attemptSetAppointment(e, 3)}} style={{minWidth:'50%' , fontSize:'1.25rem', fontWeight:'bolder', borderRadius:'.5rem'}} >{appt[`barber3`]}</button>}
+                                    {(appt['barber3'] =='Unavailable')&&<div style={{minWidth:'50%', display:'flex', justifyContent:'center',  alignItems:'end', fontSize:'1.35rem', fontWeight:'bolder'}}>{appt[`barber3`]}</div>}
+                                    </div>
+
+                                    <div style={{display: 'flex'}}><div className="apptBarberName">Dwayne Jackson:</div>
+                                    {(appt['barber4'] =='Schedule')&&<button onClick={(e)=>{attemptSetAppointment(e, 4)}} style={{minWidth:'50%', fontSize:'1.25rem', fontWeight:'bolder', borderRadius:'.5rem'}}>{appt[`barber4`]}</button>}
+                                    {(appt['barber4'] =='Unavailable')&&<div style={{minWidth:'50%', display:'flex', justifyContent:'center', fontSize:'1.35rem', fontWeight:'bolder', alignItems:'end'}}>{appt[`barber4`]}</div>}
+                                    </div>  
                                 </div>
                     </>
-                            )
-                })}
-                </>)          
+                            )})
         }
-
-        const regularSchedule = ()=>{
-            return <div style={scheduleStyle}>
-                    <div onClick={()=>{setAppointment()}}><div>09:00 a.m.</div></div>
-                    <div><div>10:00 a.m.</div></div>
-                    <div><div>11:00 a.m.</div></div>
-                    <div><div>12:00 p.m.</div></div>
-                    <div><div>01:00 p.m.</div></div>
-                    <div><div>02:00 p.m.</div></div>
-                    <div><div>03:00 p.m.</div></div>
-                    <div><div>04:00 p.m.</div></div>
-                    <div><div>05:00 p.m.</div></div>
-                    <div><div>06:00 p.m.</div></div>
-                    <div><div>07:00 p.m.</div></div>  
-                </div>      
-        }
-
-        const viewerStyle ={
-            width: "30vw",
-            border: "solid black 2px",
-            height: "85vh",
-            borderRadius: ".5rem",
-            display:"inline-flex",
-            flexDirection: "column",
-            overflow: "auto",
-        }
-
+        </>)
+    }                               
           return(
-                             <>
-                                {viewer()}
+                             <>                  
+                                {viewer()}                              
                              </>
           );
 
