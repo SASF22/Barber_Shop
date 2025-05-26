@@ -227,7 +227,7 @@ const Appointment = ({authToken, setAuthToken}) => {
             }
 
             const register = async ()=>{
-                const response = await fetch(urlFix+'/api/register',{
+                const response = await fetch('/api/register',{
                     method: "POST",
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(
