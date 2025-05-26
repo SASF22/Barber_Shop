@@ -73,7 +73,7 @@ const Home = () => {
     </div>
     
     <div id="pole">
-        <img src="/src/pages/media/marcl.png" alt="Cartoon picture of Mr. Marc L" type=""/>        
+        <img src="/src/pages/media/marcL.png" alt="Cartoon picture of Mr. Marc L" type=""/>        
     </div>
         
     </div>
