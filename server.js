@@ -40,19 +40,19 @@ app.use(express.static(distFolder));
 console.log("NEW LOCATION: ", distFolder)
 
 
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/home', async (req, res) =>{
+app.get('/home', async (req, res) =>{
   res.sendFile(path.join(distFolder, "index.html"));
 })
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/about', async (req, res) =>{
+app.get('/about', async (req, res) =>{
   res.sendFile(path.join(distFolder, "index.html"));
 })
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/appointments', async (req, res) =>{
+app.get('/appointments', async (req, res) =>{
   res.sendFile(path.join(distFolder, "index.html"));
 })
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/socialMedia', async (req, res) =>{
+app.get('/socialMedia', async (req, res) =>{
   res.sendFile(path.join(distFolder, "index.html"));
 })
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/', async (req, res) =>{
+app.get('/', async (req, res) =>{
 res.sendFile(path.join(distFolder, "index.html"));
 })
 
@@ -91,6 +91,7 @@ app.post("/api/login", async (req, res)=>{
     res.json("Email not registered in system")
   }
 });
+
 app.post("/api/register", async (req, res)=>{
   const {email, password} = await req.body; 
   const attempt = await client.query("SELECT * FROM users WHERE email = $1",
@@ -102,9 +103,8 @@ app.post("/api/register", async (req, res)=>{
       res.json('This email address has already been registered.');      
     }
     else{
-      bcrypt.hash(password, saltRounds, async(error, hash)=>{
-        if(error){
-          
+      bcrypt.hash(password, process.env.SALT_ROUNDS_NUMBER, async(error, hash)=>{
+        if(error){          
           res.json("hashing error");
         }
         else{
@@ -141,7 +141,7 @@ app.get("/api/token/verify", async (req, res)=>{
       }     
 });
 
-app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/myappointments", async (req, res)=>{
+app.post("/api/myappointments", async (req, res)=>{
   const {authorization} = req.body
   const token = authorization.slice(7)
   let user = "";
@@ -162,7 +162,7 @@ app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/myappoint
       
       
 });
-app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/deleteAppointment", async (req, res)=>{
+app.post("/api/deleteAppointment", async (req, res)=>{
 
   const {id} = req.body;
   const result = await client.query('DELETE FROM appointment WHERE appt_id = $1',[id]);
@@ -176,7 +176,7 @@ app.post("sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/deleteApp
 
 })
 
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/dayInfo/:day', async (req, res)=>{
+app.get('/api/dayInfo/:day', async (req, res)=>{
     const {day} = req.params;
     const day_info = day.split("*");
     const date = `${day_info[1]} ${day_info[2]} ${day_info[3]}`;
@@ -187,7 +187,7 @@ app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/dayInfo/:d
     res.json(data);
     
 });
-app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/appointmentdayInfo/:day', async (req, res)=>{
+app.get('/api/appointmentdayInfo/:day', async (req, res)=>{
   try{
     const {day} = req.params;
     if(day == "***"){
@@ -210,7 +210,7 @@ app.get('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/appointmen
     
 });
 
-app.post('sasf22-fictitious-barber-shop-fccc9a5ebbff.herokuapp.com/api/schedule', async (req, res)=>{ 
+app.post('/api/schedule', async (req, res)=>{ 
   let tokenUser; 
   const {userID, apptTime, barberNum, apptDate, authorization} = await req.body
   const token = await authorization.slice(7)
