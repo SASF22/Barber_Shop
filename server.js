@@ -102,7 +102,7 @@ app.post("/api/register", async (req, res)=>{
       res.json('This email address has already been registered.');      
     }
     else{
-      const hash = await bcrypt.hash(password, saltRounds)
+      const hash = await bcrypt.hash(password, 4)
         
       const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
       [email.toLowerCase(), hash]);  
