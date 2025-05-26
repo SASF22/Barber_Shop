@@ -28,6 +28,7 @@ ssl:{
 console.log(process.env.DATABASE_URL)
 console.log("saltRound: ", saltRounds)
 console.log('SALT_ROUNDS_NUMBER', process.env.SALT_ROUNDS_NUMBER);
+console.log(typeof saltRounds)
 
 client.connect();
 
