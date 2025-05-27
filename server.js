@@ -25,10 +25,7 @@ ssl:{
   rejectUnauthorized: false
 }
 })
-console.log(process.env.DATABASE_URL)
-console.log("saltRound: ", saltRounds)
-console.log('SALT_ROUNDS_NUMBER', process.env.SALT_ROUNDS_NUMBER);
-console.log(typeof saltRounds)
+
 
 client.connect();
 
@@ -40,7 +37,7 @@ const distFolder = path.resolve(__dirname,"public","dist");
 
 
 app.use(express.static(distFolder));
-console.log("NEW LOCATION: ", distFolder)
+
 
 
 app.get('/home', async (req, res) =>{
@@ -105,7 +102,7 @@ app.post("/api/register", async (req, res)=>{
       res.json('This email address has already been registered.');      
     }
     else{
-      const hash = await bcrypt.hash(password, 4)
+      const hash = await bcrypt.hash(password, Number (process.env.SALT_ROUNDS_NUMBER));
         
       const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
       [email.toLowerCase(), hash]);  
