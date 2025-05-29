@@ -103,7 +103,7 @@ html, body, .root{
 }
 #pole>img {
   justify-self: flex-start;
-  height: 600px;
+  max-height: 600px;
 }
 #homeComment {
   grid-row-start: 2;
@@ -471,12 +471,14 @@ td{
 .appointmentCalendar{
   display: flex;
   flex-wrap: wrap;
-  border: solid black 2px;
+  border: solid black 1px;
   height: 70vh;
   width: 60vw;
   border-radius: .5rem;
   margin: 2rem;
   background-color: var(--color2);
+  overflow:auto;
+  overscroll-behavior: contain;
   
 }
 .myAppointmentsButton{
@@ -646,11 +648,8 @@ td{
   font-size: 1.5rem;
 }
 }
-
-
-
-@media only screen and (max-width: 600px){
-
+@media (min-width: 801px) and (max-width: 1299px) {
+  
   html {
     width: 100%;
     height: 100%;
@@ -685,22 +684,27 @@ td{
 }
 .welcomePageInner h2{
   justify-self: center;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 }
 .welcomePageInner h3{
   justify-self: center;
-  font-size: 1.25rem;
+  font-size: 2.25rem;
 }
 .welcomePageInner p{
-  font-size: .75rem;
+  font-size: 1.5rem;
+}
+.welcomePageInner a{
+  padding-bottom: 10rem;
 }
 
 #navigationalLinks{
   display: flex;
   justify-content: space-evenly;
-  font-size: 1.5rem;
+  align-content: center;
+  align-items: center;
+  font-size: 2.5rem;
   gap: .5rem;
-  height: 3vh;
+  height: 5vh;
   width: 100vw;
   background-color: var(--color4)
 }
@@ -714,9 +718,8 @@ td{
 /* HOME PAGE FORMATTING */
 #homeContainer {
   display: grid;  
-  grid-template-rows: .25fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr;
-
+  grid-template-rows: .25fr 1fr .5fr;
+  grid-template-columns: .5fr 1fr 2fr 1fr .5fr;
   /* grid-template-columns: 1fr; */
   height: 100%;
   width: 100%;
@@ -725,28 +728,36 @@ td{
   margin-bottom: 2rem;
 } 
 .homeOuterContainer{
+ 
   height: 100%;
   width: 100%;
   background-color: var(--color1);
   color: var(--color4);
 }
-
+#homeH1{
+  grid-row-start: 1; 
+  grid-column-start: 2; 
+  grid-column-end: 5;
+}
 #homeH1 h1{
-  grid-row-start: 1;  
+  
   font-size: 2rem;
   text-align: center;
 }
 #homeHoursTable {
   grid-row-start: 2; 
-  font-size: 1rem;  
+  grid-column-start: 2;
+  grid-column-end: 5;
+  font-size: 1.5rem;  
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  
 }
 #homeHoursTable th{
   width: 50%;
 }
 #homeHoursTable table{
-  width: 100%;
+  width: 80%;
 }
 /* #homeViewImg {
   grid-row-start:4; 
@@ -760,21 +771,28 @@ td{
 
 #pole{
   margin: 1rem;
-  grid-row-start:3;  
+  grid-row-start:2;  
+  grid-column-start: 4;
+  grid-column-end: 5;
   background-color: var(--color1); 
   display: flex;
   justify-content: center;   
   mix-blend-mode: multiply;
+  align-items: center;
+  align-content: center;
+  align-self: center;
 }
 #pole>img {
   /* justify-self: flex-start; */
   /* grid-row-start: 3; */
-  width: 80%;
+  width: 100%;
   
 }
 #homeComment {
-  grid-row-start: 4;
-  font-size: 1rem;
+  grid-row-start: 3;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  font-size: 1.5rem;
   margin: 0px;  
   display: flex;
   flex-direction: column;
@@ -823,24 +841,25 @@ h2{
   border-radius: 2rem;
 }
 #aboutContainer div{
-  width: 80vw;
-  height: 100px;
+  width: 90%;
+  height: 20vh;
   margin-bottom: 1rem;    
 }
 .aboutBarber{    
   display: flex;
   justify-content: left;
   /* gap: .5rem; */
-  font-size: 0.75rem;    
+  font-size: 1.5rem;    
   align-items: center;
   overflow: visible;   
-  width: 100%;
+  max-width: 80%;
+  height: 18vh;
   background-color: var(--color4);
   /* border-radius: 2rem; */
   border-top-left-radius: 2rem;
   border-bottom-left-radius: 2rem;
-  border-bottom-right-radius: 15rem;
-  border-top-right-radius: 15rem;
+  border-bottom-right-radius: 22rem;
+  border-top-right-radius: 22rem;
   color: var(--color1);
 }
 .aboutBarber img{
@@ -856,6 +875,7 @@ h2{
   justify-content: center;
   align-content: center;
   text-align: left;
+  padding: .25rem;
   
   
 }
@@ -970,10 +990,16 @@ td{
   padding: 1rem;
   color: var(--color4)
 } 
+.selectScheduleMessageStyle h1{
+  font-size: 1.5rem;
+}
 .notWorkingScheduleStyle{
   display: flex;
   justify-content: center;
   text-align: center;
+}
+.notWorkingScheduleStyle h1{
+  font-size: 1.5rem;
 }
 .blankScheduleStyle{
   display: flex;
@@ -981,15 +1007,16 @@ td{
   text-align: center;
 }
 .viewerStyle{
-  width: 30vw;
+  width: 95vw;
   border: solid black 2px;
   height: 85vh;
   border-radius: .5rem;
   display: inline-flex;
   flex-direction: column;
-  overflow: auto;
+  /* overflow: auto; */
   background-color: var(--color2);
   color: var(--color4);
+  overflow: auto;
   
 }
 .apptStyle{
@@ -999,12 +1026,12 @@ td{
   border-radius: 2rem;
   justify-content: center;
   align-content: center; 
-  width: 80%;
+  width: 90%;
   min-height: 30vh;
-  padding: 2rem;
+  padding: 1rem;
   margin-left: auto;
   margin-right: auto;
-  gap: 1rem;
+  gap:  .5rem;
   background-color: var(--color4);
   color: var(--color1
   );
@@ -1012,11 +1039,11 @@ td{
 .apptStyle button{
   background-color: var(--color1);
   color: var(--color3);
-  height: 2.5rem;
+  height: 2rem;
 }
 .apptBarberName{
   min-width: 50%;
-  font-size: 1.35rem;
+  font-size: 2rem;
   font-weight: bolder;
   align-content: center;
 }
@@ -1061,27 +1088,28 @@ td{
   font-weight: bolder;
 }
 .appointmentOverview{
+  
   display: flex;
   z-index: -1;
   background-color: var(--color1);
-  height: 85vh;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
   align-items: center;
-  padding: 2rem;
-  border: solid black 2px;
+  padding: .25rem;
+  border: solid black 1px;
   border-radius: 2rem;
 }
 /* Calendar View */
 .daySquare{
   display: flex;
   justify-content: center;
-  border: 2px solid black;
+  border: 1px solid black;
   border-radius: .5rem;
-  width: calc(14.28% - 4px);
+  width: calc(14.28% - 2px);
   background-color: var(--color4);
   color: var(--color1);
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 .loggedInViewInnerStyle{
   display: flex;
@@ -1089,10 +1117,11 @@ td{
 }
 .appointmentMonth{
   width: 5rem;
-  height: 2rem;
+  height: 3rem;
   border-radius: .5rem;
   background-color: var(--color4);
   color: var(--color1);
+  font-size: 1rem;
 }
 .logOutButtonContainer{
   display: flex;
@@ -1103,10 +1132,10 @@ td{
   border: 2px solid black;
   border-radius: .5rem;
   background-color: var(--color4);
-  padding: 1rem;
+  padding: .5rem;
 }
 .logOutButtonLoggInAs{
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--color1);
 }
 .logOutEmailDisplay{
@@ -1115,19 +1144,24 @@ td{
 }
 .logOutButton{
   width: 5rem;
-  height: 2rem;
+  height: 3rem;
   border-radius: .5rem;
   background-color: var(--color1);
   color: var(--color4);
+  font-size: 1rem;
 }
 .appointmentDisplay{
-
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
   
 }
 .appointmentDisplayInner{
   display: flex;
   justify-content: center;
-  width: 60vw;
+  width: 80vw;
   color: var(--color4)
   
 
@@ -1135,33 +1169,43 @@ td{
 .appointmentCalendar{
   display: flex;
   flex-wrap: wrap;
-  border: solid black 2px;
-  height: 70vh;
-  width: 60vw;
-  border-radius: .5rem;
-  margin: 2rem;
+  border: solid black 1px;
+  height: 50vh;
+  width: 95%;
+  border-radius: .5rem; 
   background-color: var(--color2);
-  
+  overflow: auto; 
+  overscroll-behavior: contain; 
+}
+#appointmentContainer>div{
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .myAppointmentsButton{
-  width: 10rem;
-  height: 3rem;
+  
+  margin-left: auto;
+  margin-right: auto;
+  width: 20rem;
+  height: 7rem;
   border-radius: .5rem;
   background-color: var(--color4);
   color: var(--color1);
+  font-size: 2rem;
 }
 .appointmentDisplayInnerH1{
-  margin: 0px;  
+  margin: 0px;
+  font-size: 4rem;  
 }
 /*Popup */
 .popupMessageOuter{
   z-index: 2;
   display: flex;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   backdrop-filter: blur(10px);
-  position: absolute;
+  position: fixed;
   right: 0%;
   top: 0%;
 }
@@ -1197,10 +1241,711 @@ td{
   z-index: 2;
   display: flex;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   backdrop-filter: blur(10px);
+  position: fixed;
+  right: 0%;
+  top: 0%;
+}
+.popupWindowInner{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  min-width: 50vw;
+  min-height: 50vh;
+  max-width: 60vw;
+  max-height: 60vh;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid black;
   position: absolute;
+  top: 25%;
+  overflow: auto;
+}
+.popupWindowConfirmation{
+  text-align: center;
+}
+.popupWindowTextContainer{
+  text-align: center;
+  font-size: 2rem;
+}
+.popupWindowRedText{
+  color: red;
+}
+.popupWindowConfirmButton{
+  width: 7rem;
+  height: 3.5rem;
+  background-color: green;
+  border-radius: .5rem;
+}
+.popupWindowCancelButton{
+  width: 7rem;
+  height: 3.5rem;
+  background-color: red;
+  border-radius: .5rem;
+}
+.popupWindowButtonContainer{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+}
+/* Social Media */
+
+.socialMediaOuter{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+ 
+  
+}
+.socialMediaTitle{
+  
+  display: flex;
+  justify-content: center;
+}
+.socialMediaTitle h1{
+  color: var(--color4);
+  
+  font-size: 3rem;
+  justify-self: center;
+  text-align: center;
+}
+.socialMediaReviews{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.socialMediaBody{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  margin-top: 2rem;
+}
+.socialMediaImage{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.socialMediaImage img{
+  width: 70%;
+  aspect-ratio: auto;
+}
+/* REVIEW */
+
+
+.reviewOuter{
+  width: 80vw;
+  margin: 2rem;  
+}
+.starImg{
+  width: 200px;  
+}
+.reviewLine{
+  width: 50%;
+}
+.reviewParagraph{
+  width:80%;
+  font-size: 2rem;
+}
+.reviewName{
+  font-weight: bolder;
+  font-size: 2rem;
+}
+.profileImg{
+  height: 2rem;
+}
+.linkLine{
+  font-size: 2rem;
+}
+}
+
+@media only screen and (max-width: 800px){
+
+  html {
+    width: 100%;
+    height: 100%;
+  }
+  body{
+    width: 100%;
+    height: 100%;
+  }
+  #root{
+    width: 100%;
+    height: 100%;
+  }
+
+  .welcomePage{
+  height: 100%;
+  width: 100%;
+  top: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  align-items: center;
+  font-size: 1.5rem;
+}
+.welcomePageInner{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 100%;
+}
+.welcomePageInner h2{
+  justify-self: center;
+  font-size: 1.5rem;
+}
+.welcomePageInner h3{
+  justify-self: center;
+  font-size: 1.25rem;
+}
+.welcomePageInner p{
+  font-size: .75rem;
+}
+
+
+#navigationalLinks{
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  gap: .5rem;
+  height: 4vh;
+  width: 100vw;
+  background-color: var(--color4)
+}
+#navigationalLinks a{
+  color: var(--color1)
+}
+.linkAnchor{
+  margin-right: 5vw;
+}
+
+/* HOME PAGE FORMATTING */
+#homeContainer {
+  display: grid;  
+  grid-template-rows: .25fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+
+  /* grid-template-columns: 1fr; */
+  height: 100%;
+  width: 100%;
+  background-color: var(--color1);
+  padding: .5rem;
+  margin-bottom: 2rem;
+} 
+.homeOuterContainer{
+  height: 100%;
+  width: 100%;
+  background-color: var(--color1);
+  color: var(--color4);
+}
+
+#homeH1 h1{
+  grid-row-start: 1;  
+  font-size: 2rem;
+  text-align: center;
+}
+#homeHoursTable {
+  grid-row-start: 2; 
+  font-size: 1rem;  
+  display: flex;
+  justify-content: center;
+}
+#homeHoursTable th{
+  width: 50%;
+}
+#homeHoursTable table{
+  width: 100%;
+}
+/* #homeViewImg {
+  grid-row-start:4; 
+  height: 100%;
+  width: 100%;  
+} */
+/* #homeViewImg>img{
+  height: 300px;
+  aspect-ratio: auto;
+} */
+
+#pole{
+  margin: 1rem;
+  grid-row-start:3;  
+  background-color: var(--color1); 
+  display: flex;
+  justify-content: center;   
+  mix-blend-mode: multiply;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+}
+#pole>img {
+  /* justify-self: flex-start; */
+  /* grid-row-start: 3; */
+  width: 40%;
+  
+}
+#homeComment {
+  grid-row-start: 4;
+  font-size: 1rem;
+  margin: 0px;  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  padding-bottom: 5rem;
+  padding-top: 5rem
+}
+#homeComment p{
+  margin: 0px;
+}
+
+/* ABOUT PAGE FORMATTING */
+
+/* h1{
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+}
+h2{
+  font-size: 1.5rem;
+} */
+
+/* #leftBase{
+  margin-left: 10vw;
+} */
+ .aboutOuterContainer{
+  background-color: var(--color1); 
+  /* background-image: url('./pages/media/clippers.png'); */
+  /* background-image: linear-gradient(var(--color1), var(--color4)); */
+  mix-blend-mode: multiply;
+  width: 100vw;
+  height: 100%;
+ }
+#aboutContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10vw;
+  color: var(--color4);
+  width: 100vw;
+  
+}
+#aboutContainer embed{
+  flex: 10%;
+  height: 100%;
+  /* width: 60%;     */
+  border-radius: 2rem;
+}
+#aboutContainer div{
+  width: 90%;
+  height: 100px;
+  margin-bottom: 1rem;    
+}
+.aboutBarber{    
+  display: flex;
+  justify-content: left;
+  /* gap: .5rem; */
+  font-size: 0.65rem;    
+  align-items: center;
+  overflow: visible;   
+  width: 100%;
+  background-color: var(--color4);
+  /* border-radius: 2rem; */
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 5rem;
+  border-top-right-radius: 5rem;
+  color: var(--color1);
+}
+.aboutBarber img{
+  height: 80%;
+  aspect-ratio: auto;
+  border-radius: 2rem;
+  margin-left: 1rem;
+}
+.aboutBio{
+  margin-left: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: left;
+  padding: .25rem;
+  
+  
+}
+.aboutBarber p{
+  margin: 0;
+}
+/*  Appointment Portion */
+
+/* h1{
+  font-family: "Cinzel", serif;
+  font-size: 4rem;
+} */
+
+#navigation{
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  /* margin-left: 10vw; */
+  font-size: 1rem;
+  margin-bottom: .5rem;
+  background-color: rgb(73, 73, 73);
+  padding: 1.1rem;    
+  color: white;
+}
+#calendar{
+  display: flex;
+  margin-top: 5vh;
+  flex-wrap: wrap;
+  
+}
+#navigation a{
+  color: white;
+}
+#leftBase{
+  margin-left: 10vw;
+}
+#container{
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  margin-left: 10vw;
+}
+#focus{
+  /* border: black solid 2px; */
+  /* width: 100vw; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20vw;
+  gap: 16rem;
+}
+embed{
+  height: 100%;
+}
+th{
+  text-align: left;
+  font-size: 1.7rem;
+  width: 3rem;    
+}
+td{
+  width: 12rem;
+}
+#comment{
+  text-align: left;
+  font-size: 1.5rem;
+  margin-top: 4rem;
+}
+#comment p{
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+#display{
+  display: flex;
+  gap: 4rem;
+}
+
+/* AppointmentView */
+.upperView{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 95vh;
+  width: 100%;
+}
+.myAppointmentDisplayStyle{
+  border: 2px black solid;
+  border-radius: .5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  background-color: var(--color4);
+  color: var(--color1);
+}
+.myAppointmentDisplayStyle button{
+  padding: .5rem;
+  border-radius: .5rem;
+  border: 2px black solid;
+  width: 40%;
+  align-self: center;
+  height: 40%;
+  font-weight: bolder;
+  background-color: var(--color3);
+  color: var(--color4);
+}
+.selectScheduleMessageStyle{
+  display: flex; 
+  justify-content: center; 
+  text-align: center; 
+  padding: 1rem;
+  color: var(--color4)
+} 
+.selectScheduleMessageStyle h1{
+  font-size: 1.5rem;
+}
+.notWorkingScheduleStyle{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.notWorkingScheduleStyle h1{
+  font-size: 1.5rem;
+}
+.blankScheduleStyle{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.viewerStyle{
+  width: 95vw;
+  border: solid black 2px;
+  height: 85vh;
+  border-radius: .5rem;
+  display: inline-flex;
+  flex-direction: column;
+  /* overflow: auto; */
+  background-color: var(--color2);
+  color: var(--color4);
+  overflow: auto;
+  
+}
+.apptStyle{
+  display: flex;
+  flex-direction: column;
+  border: 2px black solid;
+  border-radius: 2rem;
+  justify-content: center;
+  align-content: center; 
+  width: 90%;
+  min-height: 30vh;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  gap:  .5rem;
+  background-color: var(--color4);
+  color: var(--color1
+  );
+}
+.apptStyle button{
+  background-color: var(--color1);
+  color: var(--color3);
+  height: 2rem;
+}
+.apptBarberName{
+  min-width: 50%;
+  font-size: 1rem;
+  font-weight: bolder;
+  align-content: center;
+}
+.myAppointmentListContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+
+/* Appointment */
+/* .upperView{
+
+} */
+.lowerView{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  padding: 2rem;
+  border: solid black 2px;
+  border-radius: 2rem;
+  background-color: var(--color4);
+  color: var(--color1);
+}
+.lowerViewButtonContainer{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+}
+.lowerViewButtonContainer button{
+  width: 100%;
+  color: var(--color4);
+  background-color: var(--color2);
+  border-radius: .25rem;
+  font-weight: bolder;
+}
+.appointmentOverview{
+  
+  display: flex;
+  z-index: -1;
+  background-color: var(--color1);
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  padding: .25rem;
+  border: solid black 1px;
+  border-radius: 2rem;
+}
+/* Calendar View */
+.daySquare{
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: .5rem;
+  width: calc(14.28% - 2px);
+  background-color: var(--color4);
+  color: var(--color1);
+  font-size: .5rem;
+}
+.loggedInViewInnerStyle{
+  display: flex;
+  justify-content: space-between;
+}
+.appointmentMonth{
+  width: 3rem;
+  height: 2rem;
+  border-radius: .5rem;
+  background-color: var(--color4);
+  color: var(--color1);
+  font-size: .5rem;
+}
+.logOutButtonContainer{
+  display: flex;
+  gap: 1rem;
+  margin-right: 2rem;
+  align-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: .5rem;
+  background-color: var(--color4);
+  padding: 1rem;
+}
+.logOutButtonLoggInAs{
+  font-size: .75rem;
+  color: var(--color1);
+}
+.logOutEmailDisplay{
+  font-size: 1rem;
+  color: var(--color1);  
+}
+.logOutButton{
+  width: 3rem;
+  height: 2rem;
+  border-radius: .5rem;
+  background-color: var(--color1);
+  color: var(--color4);
+  font-size: .5rem;
+}
+.appointmentDisplay{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  
+}
+.appointmentDisplayInner{
+  display: flex;
+  justify-content: center;
+  width: 60vw;
+  color: var(--color4)
+  
+
+}
+.appointmentCalendar{
+  display: flex;
+  flex-wrap: wrap;
+  border: solid black 1px;
+  height: 50vh;
+  width: 100%;
+  border-radius: .5rem; 
+  background-color: var(--color2);
+  overflow: auto; 
+  overscroll-behavior: contain; 
+}
+#appointmentContainer>div{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.myAppointmentsButton{
+  
+  margin-left: auto;
+  margin-right: auto;
+  width: 10rem;
+  height: 3rem;
+  border-radius: .5rem;
+  background-color: var(--color4);
+  color: var(--color1);
+}
+.appointmentDisplayInnerH1{
+  margin: 0px;  
+}
+/*Popup */
+.popupMessageOuter{
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  right: 0%;
+  top: 0%;
+}
+.popupMessageInner{
+  min-width: 50vw;
+  min-height: 50vh;
+  max-width: 60vw;
+  max-height: 20vh;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid black;
+  position: absolute;
+  top: 25%;
+  overflow: auto;
+}
+.popupMessageMessage{
+  text-align: center;
+}
+.popupMessageInnerContainer{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  gap: 1rem;
+}
+.popupMessageButton{
+  width: 7rem;
+  height: 3.5rem;
+  background-color: rgb(5, 126, 15);
+  border-radius: .5rem;
+}
+.popupWindowOuter{
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  position: fixed;
   right: 0%;
   top: 0%;
 }
