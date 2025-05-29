@@ -12,7 +12,7 @@ const cors = require("cors");
 //const corsOptions = {origin: ["http://localhost:5173"],    
 //};
 app.use(cors());
-
+console.log(process.env.DATABASE_URL)
 const {Client } = require('pg');
 const client = new Client({
 // user: process.env.PG_USER,
@@ -76,12 +76,10 @@ app.post("/api/login", async (req, res)=>{
              
         if(result){
           
-          const token = jwt.sign({username : email}, jwt_SECRET,{expiresIn: '1h'})
-                  
+          const token = jwt.sign({username : email}, jwt_SECRET,{expiresIn: '1h'})                  
           res.status(200).json({message:'success', token: token, email: email});
         }
-        else{
-          
+        else{          
           res.json('Incorrect Password')
         }
       }
@@ -106,7 +104,7 @@ app.post("/api/register", async (req, res)=>{
         
       const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
       [email.toLowerCase(), hash]);  
-      const token = jwt.sign({username : email}, jwt_SECRET)
+      const token = jwt.sign({username : email}, jwt_SECRET, {expiresIn: '1h'})
                   
       res.status(200).json({message: "success", token: token});           
         
@@ -126,7 +124,7 @@ app.get("/api/token/verify", async (req, res)=>{
       try{
         jwt.verify(`${token}`, jwt_SECRET, async (err, decoded)=>{
             if(err){
-              res.json(err.message) 
+              res.json(err) 
             }
             else{
               user = await decoded.username;  ////RIGHT HERE              
