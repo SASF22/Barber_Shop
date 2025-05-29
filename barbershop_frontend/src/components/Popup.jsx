@@ -4,9 +4,7 @@ import React from  "react";
 
 const Popup = ({popupTrigger, deleteMyAppt, setPopupTrigger, popupTrigger2,  setPopupTrigger2, popupTriggerMessage, setPopupTriggerMessage, popupMessage, dayView, schedulingArray, setAppointment, popupObject, setPopupObject}) => {
 
-    const confirmButtonAction = async ()=>{
-
-        console.log(schedulingArray); 
+    const confirmButtonAction = async ()=>{        
         setAppointment();
         setPopupTrigger(()=>{
             return false;
@@ -83,7 +81,7 @@ const Popup = ({popupTrigger, deleteMyAppt, setPopupTrigger, popupTrigger2,  set
                                 <div className="popupWindowInner">  
                                     <div className="popupWindowTextContainer">  
                                         <h3>    
-                                            ATTENTION!  LOGIN TIMEOUT EXPIRED.                                               
+                                            ATTENTION! <br/>LOG IN TIME EXPIRED<br/> PLEASE LOG BACK IN                                                
                                         </h3>
                                     </div>                                                               
                                     <div className="popupWindowButtonContainer">

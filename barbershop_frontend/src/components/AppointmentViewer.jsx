@@ -88,21 +88,22 @@ const AppointmentViewer = ({dayView, thisFunction, formatTime, moy, emailValue, 
                     {myAppointments.map((item)=>{                    
                     
                     let dateFormat = item.appt_date.slice(0, 10)
-                    let dateArray = dateFormat.split('-')           
+                    let dateArray = dateFormat.split('-')   
+                    console.log(formatTime(item.appt_time));        
                     
                     return  <>
-                                <div className="myAppointmentDisplayStyle" key={item.appt_id} > <div>TIME: {(formatTime(item.appt_time)).toUpperCase()}</div> <div>DATE: {(moy[Number (dateArray[1]) -1]).toUpperCase()} {dateArray[2]}, {dateArray[0]}</div> <div>BARBER: {(barberArray[item.barber - 1]).toUpperCase()}</div> 
+                                <div className="myAppointmentDisplayStyle" key={item.appt_id} > <div>TIME: {(formatTime(item.appt_time))}</div> <div>DATE: {(moy[Number (dateArray[1]) -1]).toUpperCase()} {dateArray[2]}, {dateArray[0]}</div> <div>BARBER: {(barberArray[item.barber - 1]).toUpperCase()}</div> 
                                 
-                                <button apptnum={item.appt_id} apptinfo={(formatTime(item.appt_time)).toUpperCase() + "*" + (moy[Number (dateArray[1]) -1]).toUpperCase() + " " + dateArray[2] + ", " + dateArray[0] + "*" + (barberArray[item.barber - 1]).toUpperCase() } onClick={(e)=>{
+                                <button apptnum={item.appt_id} apptinfo={(formatTime(item.appt_time)) + "*" + (moy[Number (dateArray[1]) -1]).toUpperCase() + " " + dateArray[2] + ", " + dateArray[0] + "*" + (barberArray[item.barber - 1]).toUpperCase() } onClick={(e)=>{
                                     cnclMyAppt(e);}}> CANCEL
                                 </button> 
                                 
                                 </div> 
                             </>  
-            })};
-            
+            })};            
             </>
         }
+
         const displayAppointmentsNone = ()=>{
             return<>
             <h2>YOU HAVE NO APPOINTMENTS SCHEDULED</h2>

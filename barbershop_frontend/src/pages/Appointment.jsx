@@ -58,19 +58,25 @@ const Appointment = ({authToken, setAuthToken}) => {
     }
 
     const formatTime = (time) =>{
-        let timeNum = time.slice(0, 2);
-        timeNum = Number(timeNum);        
+        let timeNum =  time.slice(0, 2);
+        timeNum = Number(timeNum); 
+        
         if(timeNum < 12){
-            timeNum = timeNum + ":00 a.m.";
+            timeNum = timeNum + ":00 A.M.";
         }
         else if(timeNum > 12){
             timeNum = timeNum - 12;
-            timeNum = timeNum + ":00 p.m.";
+            timeNum = timeNum + ":00 P.M.";
         }
         else{
-            timeNum = timeNum + ":00 p.m.";
-        }       
-        return timeNum
+            timeNum = timeNum + ":00 P.M.";
+        }  
+        console.log( "THE TyPE OF:  ", typeof timeNum) 
+        console.log('TIME NUM:  ', timeNum);    
+        return `${timeNum}`
+        
+        
+        
     }
 
     const setAppointment =  async ()=>{
@@ -102,7 +108,7 @@ const Appointment = ({authToken, setAuthToken}) => {
            
             setApptArray(()=>{
                 return [...data2];
-            },console.log("state is set")) 
+            }) 
             
             setPopupMessage(()=>{
                 return "YOU HAVE SUCCESSFULLY SCHEDULED YOUR APPOINTMENT"
@@ -176,7 +182,8 @@ const Appointment = ({authToken, setAuthToken}) => {
                     setEmailValue(()=>{
                         return data.user
                     })                
-                }                
+                } 
+                return data;               
             }
             const loadToken = async ()=>{                
                 let tokenValue = window.localStorage.getItem('TOKEN');
@@ -184,9 +191,10 @@ const Appointment = ({authToken, setAuthToken}) => {
                     return tokenValue;
                 })
                 return tokenValue;
-            }
+            }            
+
             const login = async ()=>{
-                const response = await fetch(urlFix+'/api/login',{
+                const response = await fetch(`${urlFix}/api/login`,{
                     method: "POST",
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(
@@ -227,7 +235,31 @@ const Appointment = ({authToken, setAuthToken}) => {
             }
 
             const register = async ()=>{
-                const response = await fetch('/api/register/',{
+                let mailRegEx = /\w+@\w+\.\w+/g
+                let mailValue = emailValue.match(mailRegEx);
+               
+                if(mailValue == null){                   
+                   setPopupObject(()=>{
+                    let newObject = new Object();
+                    newObject.message = true;
+                    newObject.text = 'ATTENTION!'
+                    newObject.text2 = 'Please Enter a valid Email address.'
+                    return {...newObject}
+                   })
+                   return
+                }
+                if(passwordValue.length < 4 ){                   
+                   setPopupObject(()=>{
+                    let newObject = new Object();
+                    newObject.message = true;
+                    newObject.text = 'ATTENTION!'
+                    newObject.text2 = 'Password must be four characters long.'
+                    return {...newObject}
+                   })
+                   return
+                }
+
+                const response = await fetch(`${urlFix}/api/register/`,{
                     method: "POST",
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(
@@ -257,10 +289,28 @@ const Appointment = ({authToken, setAuthToken}) => {
 
             useEffect(()=>{
                 const tokenHandle = async ()=>{
-                  let tokenValue =  await loadToken();
-                  await verifyToken(tokenValue);
+                  let tokenObject = " ";
+                  let tokenValue = await loadToken();                  
+                  tokenObject = await verifyToken(tokenValue);
+                  if(tokenObject.message != 'success'){                    
+                    setPopupObject(()=>{
+                        let newObject = new Object();
+                        newObject.message = true;
+                        newObject.text = "Your session has expired";
+                        return {...newObject};
+                    })
+                    logOut();
+                    window.localStorage.clear;
+                    return;                    
+                  }                  
+                  setEmailValue(()=>{
+                    return tokenObject.user;
+                  })
                 }
-                tokenHandle();                                             
+                if(window.localStorage.getItem('TOKEN')){
+                  tokenHandle();    
+                }
+                                                           
             },[authToken])
 
         const loggInView = ()=>{
