@@ -55,7 +55,7 @@ app.get('/socialMedia', async (req, res) =>{
 app.get('/', async (req, res) =>{
 res.sendFile(path.join(distFolder, "index.html"));
 })
-app.get('/review', async (req, res) =>{
+app.get('/reviews', async (req, res) =>{
 res.sendFile(path.join(distFolder, "index.html"));
 })
 
