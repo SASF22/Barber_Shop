@@ -240,9 +240,7 @@ app.post('/api/schedule', async (req, res)=>{
     
 })
 
-app.get('/*', async (req, res) =>{
-res.sendFile(path.join(distFolder, "index.html"));
-})
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
