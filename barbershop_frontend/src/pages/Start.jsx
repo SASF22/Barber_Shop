@@ -24,6 +24,7 @@ const Start = () => {
 
                              <p>This project was created using Javascript, React, PostgreSQL, CSS, and HTML.</p>
                              <p>This project contains a full-stack web development scheme, both client-side and server-side development.</p>                             
+                             <p>Unfortunately this project does not run correctly on iPhone operating systems.</p>
                              <p> <u><strong>THANK YOU</strong></u> for viewing my work.   <Link style={{marginLeft: '20%'}} to={"/home"}>Continue to Home</Link>     </p>  
                              </div>
                              </div>
