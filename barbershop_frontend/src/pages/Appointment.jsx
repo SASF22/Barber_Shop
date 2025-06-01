@@ -199,19 +199,19 @@ const Appointment = ({authToken, setAuthToken}) => {
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(
                     {
-                        email: emailValue,
+                        email: emailValue.toLowerCase,
                         password: passwordValue,
                     })
                 });
                 const data = await response.json();
                 if (data.message == 'success'){
-                    window.localStorage.setItem('TOKEN', data.token);
+                    window.localStorage.setItem('TOKEN', data.token.toLowerCase());
                     window.localStorage.setItem('EMAIL', data.email);
                     setAuthToken(()=>{
                         return data.token
                     })
                     setEmailValue(()=>{
-                        return data.email
+                        return data.email.toLowerCase();
                     })      
                 }
                 else{

@@ -150,7 +150,7 @@ app.post("/api/myappointments", async (req, res)=>{
             }
             else{
               user = await decoded.username;  ////RIGHT HERE
-              const result = await client.query('SELECT appt_id, appt_time, appt_date, barber FROM appointment FULL JOIN users ON appointment.user_email = users.user_id WHERE users.email = $1 AND appt_date > NOW() ORDER BY appt_date, appt_time',[user]) 
+              const result = await client.query('SELECT appt_id, appt_time, appt_date, barber FROM appointment FULL JOIN users ON appointment.user_email = users.user_id WHERE users.email = $1 AND appt_date > NOW() ORDER BY appt_date, appt_time',[user.toLowerCase()]) 
               res.status(200).json({message:'success', token: token, user: user, list: result.rows});           
             }
           });                  
