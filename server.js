@@ -132,7 +132,7 @@ app.get("/api/token/verify", async (req, res)=>{
             }
             else{
               user = await decoded.username;  ////RIGHT HERE              
-              res.status(200).json({message:'success', token: token, user: user});           
+              res.status(200).json({message:'success', token: token, user: user.toLowerCase()});           
             }
           });
       }catch(e){  

@@ -276,7 +276,7 @@ const Appointment = ({authToken, setAuthToken}) => {
                     return data.token
                     })
                      setEmailValue(()=>{
-                        return data.email
+                        return data.email.toLowerCase()
                     })                  
                 }
                 else{
