@@ -93,7 +93,7 @@ const Appointment = ({authToken, setAuthToken}) => {
                 })
             })
             const data = await response.json();            
-            if (data != 'success'){
+            if (data == 'ERROR IN TOKEN VERIFICATION'){
                 setPopupTrigger2(()=>{
                     return true;
                 })
@@ -117,6 +117,8 @@ const Appointment = ({authToken, setAuthToken}) => {
                 return true;
             })
         }
+
+
 
              const grabData = async ()=>{
                 let data = [];
