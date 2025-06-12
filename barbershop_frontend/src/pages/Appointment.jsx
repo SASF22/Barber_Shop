@@ -205,7 +205,7 @@ const Appointment = ({authToken, setAuthToken}) => {
                 });
                 const data = await response.json();
                 if (data.message == 'success'){
-                    window.localStorage.setItem('TOKEN', data.token.toLowerCase());
+                    window.localStorage.setItem('TOKEN', data.token);
                     window.localStorage.setItem('EMAIL', data.email);
                     setAuthToken(()=>{
                         return data.token
