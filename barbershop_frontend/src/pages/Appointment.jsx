@@ -92,14 +92,14 @@ const Appointment = ({authToken, setAuthToken}) => {
                     authorization: `Bearer ${authToken}`,
                 })
             })
-            const data = await response.json();            
-            if (data == 'MISMATCH IN EMAIL'){
-                setPopupTrigger2(()=>{
-                    return true;
-                })
-                logOut();
-                return;
-            }            
+            // const data = await response.json();            
+            // if (data == 'MISMATCH IN EMAIL'){
+            //     setPopupTrigger2(()=>{
+            //         return true;
+            //     })
+            //     logOut();
+            //     return;
+            // }            
 
             let data2 = [];           
             const response2 = await fetch(`${urlFix}/api/appointmentdayInfo/${dayView}`);
