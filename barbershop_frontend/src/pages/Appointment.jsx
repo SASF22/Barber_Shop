@@ -93,7 +93,7 @@ const Appointment = ({authToken, setAuthToken}) => {
                 })
             })
             const data = await response.json();            
-            if (data == 'ERROR IN TOKEN VERIFICATION'){
+            if (data == 'MISMATCH IN EMAIL'){
                 setPopupTrigger2(()=>{
                     return true;
                 })
