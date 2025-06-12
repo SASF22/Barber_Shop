@@ -80,7 +80,7 @@ app.post("/api/login", async (req, res)=>{
              
         if(result){
           
-          const token = jwt.sign({username : email}, jwt_SECRET,{expiresIn: '1h'})                  
+          const token = jwt.sign({username : email}, jwt_SECRET,{expiresIn: '6h'})                  
           res.status(200).json({message:'success', token: token, email: email});
         }
         else{          
@@ -108,7 +108,7 @@ app.post("/api/register", async (req, res)=>{
         
       const result = await client.query("INSERT INTO users(email, password) VALUES ($1, $2)",
       [email.toLowerCase(), hash]);  
-      const token = jwt.sign({username : email}, jwt_SECRET, {expiresIn: '1h'})
+      const token = jwt.sign({username : email}, jwt_SECRET, {expiresIn: '6h'})
                   
       res.status(200).json({message: "success", token: token});           
         
