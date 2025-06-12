@@ -94,15 +94,15 @@ const Appointment = ({authToken, setAuthToken}) => {
             })
 
             const data = await response.json();            
-            if (data == 'MISMATCH IN EMAIL'){
+            if (data == 'MISMATCH IN EMAIL' || data == "ERROR IN TOKEN VERIFICATION"){
                 setPopupTrigger2(()=>{
                     return true;
                 })
-                // logOut();
+                logOut();
                 return;
             }            
 
-            let data2 = [];           
+            let data2 = await  [];           
             const response2 = await fetch(`${urlFix}/api/appointmentdayInfo/${dayView}`);
            
             data2 = await response2.json();                 
@@ -118,8 +118,6 @@ const Appointment = ({authToken, setAuthToken}) => {
                 return true;
             })
         }
-
-
 
              const grabData = async ()=>{
                 let data = [];
