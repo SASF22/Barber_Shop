@@ -218,15 +218,15 @@ app.post('/api/schedule', async (req, res)=>{
               console.log('here 1')
               res.json('ERROR IN TOKEN VERIFICATION') 
             }
-            else{              
-              tokenUser = await decoded.username;  ////RIGHT HERE  
+            // else{              
+            //   tokenUser = await decoded.username;  ////RIGHT HERE  
                
-              if(tokenUser != userID){
-               console.log("here 2")
-                res.json('MISMATCH IN EMAIL')
-              }  
+            //   if(tokenUser != userID){
+            //    console.log("here 2")
+            //     res.json('MISMATCH IN EMAIL')
+            //   }  
                              
-            }
+            // }
           });
               
       }catch(e){
