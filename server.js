@@ -215,14 +215,14 @@ app.post('/api/schedule', async (req, res)=>{
   try {
         jwt.verify(`${token}`, jwt_SECRET, async (err, decoded)=>{
             if(err){
-              
+              console.log('here 1')
               res.json('ERROR IN TOKEN VERIFICATION') 
             }
             else{              
               tokenUser = await decoded.username;  ////RIGHT HERE  
                
               if(tokenUser != userID){
-               
+               console.log("here 2")
                 res.json('MISMATCH IN EMAIL')
               }  
                              

@@ -186,6 +186,8 @@ const Appointment = ({authToken, setAuthToken}) => {
                 } 
                 return data;               
             }
+
+
             const loadToken = async ()=>{                
                 let tokenValue = window.localStorage.getItem('TOKEN');
                 setAuthToken(()=>{
@@ -269,6 +271,8 @@ const Appointment = ({authToken, setAuthToken}) => {
                         password: passwordValue,
                     })
                 });
+
+                
                 const data = await response.json();                
                 if (data.message == 'success'){
                     window.localStorage.setItem('TOKEN', data.token);
